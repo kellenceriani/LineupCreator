@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Local Multiplayer Draft Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Local Multiplayer Draft Game</h1>
+
+    <section id="setup">
+      <div class="row">
+        <label for="playerCount">Number of players (2-8):</label>
+        <input type="number" id="playerCount" min="2" max="8" value="2" />
+      </div>
+
+      <div id="playersContainer"></div>
+
+      <div class="row">
+        <label for="categoryInput">Category (or leave blank for random):</label>
+        <input type="text" id="categoryInput" placeholder="e.g. superheroes" />
+      </div>
+
+<div class="row">
+  <label for="lineupSelect">Lineup Type:</label>
+  <select id="lineupSelect" required>
+    <option value="">-- Select a Lineup Type --</option>
+    <option value="Basketball Starting 5 (PG, SG, SF, PF, C)">Basketball Starting 5 (PG, SG, SF, PF, C)</option>
+    <option value="Soccer Starting 11 (GK, RB, CB, LB, CM, CAM, RW, LW, ST)">Soccer Starting 9 (GK, RB, CB, CB2, LB, CM, CDM CAM, RW, LW, ST)</option>
+    <option value="Baseball Starting 1-9 + DH + SP">Baseball Starting 1-9 + DH + SP</option>
+    <option value="American Football Offense (QB, RB, WR, TE, OL)">American Football Offense (QB, RB, WR, TE, OL)</option>
+    <option value="Hockey Starting 6 (LW, C, RW, LD, RD, G)">Hockey Starting 6 (LW, C, RW, LD, RD, G)</option>
+    <option value="Esports Team (Top, Jungle, Mid, ADC, Support)">Esports Team (Top, Jungle, Mid, ADC, Support)</option>
+    <option value="Volleyball Starting 6 (Setter, Outside Hitter, Middle Blocker, Opposite Hitter, Libero, Defensive Specialist)">Volleyball Starting 6 (Setter, Outside Hitter, Middle Blocker, Opposite Hitter, Libero, Defensive Specialist)</option>
+  </select>
+</div>
+
+
+
+      <button id="startDraftBtn">Start Draft</button>
+    </section>
+
+    <section id="draftSection" class="hidden">
+      <h2>Drafting: <span id="categoryDisplay"></span></h2>
+      <h3>Lineup: <span id="lineupDisplay"></span></h3>
+      <div id="draftInfo"></div>
+      <div id="draftArea"></div>
+      <button id="finishDraftBtn" class="hidden">Finish Draft & Generate Prompt</button>
+    </section>
+
+    <section id="resultSection" class="hidden">
+      <h2>Generated Prompt</h2>
+      <textarea id="promptOutput" readonly></textarea>
+      <button id="copyPromptBtn">Copy Prompt</button>
+      <a id="chatgptLink" href="https://chat.openai.com/chat" target="_blank" rel="noopener" class="button">Go to ChatGPT</a>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
