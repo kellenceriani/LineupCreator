@@ -16,8 +16,8 @@
 
   const lineupPrompts = {
     "Basketball Starting 5 (PG, SG, SF, PF, C)": `Evaluate each drafted basketball lineup. Analyze position fit, offensive/defensive balance, chemistry, and overall basketball IQ. Assign an NBA 2K-style OVR rating to each player and determine which team would dominate on the court.`,
-    "Soccer Starting 11 (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)": `Review each soccer lineup. Consider player synergy, formation logic, positional strengths, and overall team chemistry. Rate individual players on skill and role-fit, and crown the best football squad.`,
-    "Baseball Starting 1-9 + DH + SP": `Evaluate the following baseball lineups by doing player-to-player matchups and positional fits. Judge each team on chemistry, talent, lineup construction sensibility, and more. Assign MLB The Show-style OVRs to each player and declare the strongest roster.`,
+    "Soccer Starting XI (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)": `Review each soccer lineup. Consider player synergy, formation logic, positional strengths, and overall team chemistry. Rate individual players on skill and role-fit, and crown the best football squad.`,
+    "Baseball Starting 1-9 (CF, LF, RF, 2B, 3B, SS, 1B, C, DH) 10 (SP)": `Evaluate the following baseball lineups by doing player-to-player matchups and positional fits. Judge each team on chemistry, talent, lineup construction sensibility, and more. Assign MLB The Show-style OVRs to each player and declare the strongest roster.`,
     "American Football Offense (QB, RB, WR, TE, OL)": `Break down each football offensive lineup. Consider the versatility, playmaking, blocking synergy, and quarterback leadership. Rate each player as in Madden, then decide which offense would be most unstoppable on the field.`,
     "Hockey Starting 6 (LW, C, RW, LD, RD, G)": `Analyze each hockey team. Evaluate skating ability, positional coverage, puck control, chemistry, and goalie reliability. Assign NHL-style ratings and determine which team would rule the rink.`,
     "Esports Team (Top, Jungle, Mid, ADC, Support)": `Judge the composition of each esports team, focusing on meta relevance, role synergy, mechanical skill, and strategic balance. Assign each player an OVR like in League of Legends rankings and determine the superior team.`,
@@ -26,8 +26,8 @@
 
   const lineupPositionCounts = {
     "Basketball Starting 5 (PG, SG, SF, PF, C)": 5,
-    "Soccer Starting 11 (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)": 11,
-    "Baseball Starting 1-9 + DH + SP": 11,
+    "Soccer Starting XI (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)": 11,
+    "Baseball Starting 1-9 (CF, LF, RF, 2B, 3B, SS, 1B, C, DH) 10 (SP)": 10,
     "American Football Offense (QB, RB, WR, TE, OL)": 5,
     "Hockey Starting 6 (LW, C, RW, LD, RD, G)": 6,
     "Esports Team (Top, Jungle, Mid, ADC, Support)": 5,
