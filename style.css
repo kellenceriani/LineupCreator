@@ -294,3 +294,8 @@ button:disabled {
     min-width: 100%;
   }
 }
+.battingOrder {
+  font-weight: bold;
+  color: #0066cc;
+  margin-left: 8px;
+}
