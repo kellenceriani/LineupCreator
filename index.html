@@ -29,7 +29,7 @@
     <option value="Basketball Starting 5 (PG, SG, SF, PF, C)">Basketball Starting 5 (PG, SG, SF, PF, C)</option>
     <option value="Soccer Starting XI (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)">Soccer Starting XI (GK, RB, CB, CB2, LB, CM, CDM CAM, RW, LW, ST)</option>
     <option value="Baseball Starting 1-9 + SP (CF, LF, RF, 2B, 3B, SS, 1B, C, DH, SP)">Baseball Starting 1-9 + SP (CF, LF, RF, 2B, 3B, SS, 1B, C, DH, SP)</option>
-    <option value="American Football Offense (QB, RB, WR, TE, OL)">American Football Offense (QB, RB, WR, TE, OL)</option>
+    <option value= "American Football (QB, RB, RB2, WR, WR2, TE, D/ST, K)">American Football (QB, RB, RB2, WR, WR2, TE, D/ST, K)</option>
     <option value="Hockey Starting 6 (LW, C, RW, LD, RD, G)">Hockey Starting 6 (LW, C, RW, LD, RD, G)</option>
     <option value="Esports Team (Top, Jungle, Mid, ADC, Support)">Esports Team (Top, Jungle, Mid, ADC, Support)</option>
     <option value="Volleyball Starting 6 (Setter, Outside Hitter, Middle Blocker, Opposite Hitter, Libero, Defensive Specialist)">Volleyball Starting 6 (Setter, Outside Hitter, Middle Blocker, Opposite Hitter, Libero, Defensive Specialist)</option>
@@ -46,12 +46,17 @@
       <button id="finishDraftBtn" class="hidden">Finish Draft & Generate Prompt</button>
     </section>
 
-    <section id="resultSection" class="hidden">
-      <h2>Generated Prompt</h2>
-      <textarea id="promptOutput" readonly></textarea>
-      <button id="copyPromptBtn">Copy Prompt</button>
-      <a id="chatgptLink" href="https://chat.openai.com/chat" target="_blank" rel="noopener" class="button">Go to ChatGPT</a>
-    </section>
+<section id="resultSection" class="hidden">
+  <h2>Generated Prompt</h2>
+  <textarea id="promptOutput" readonly></textarea>
+  
+<div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+  <button id="copyPromptBtn">Copy Prompt</button>
+  <a id="chatgptLink" href="https://chat.openai.com/chat" target="_blank" rel="noopener" class="button">Go to ChatGPT</a>
+</div>
+
+</section>
+
   </main>
 
   <script src="app.js"></script>

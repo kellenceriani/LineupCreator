@@ -24,12 +24,11 @@
     "Gods/Goddesses", "Big things (real)", "Holiday Related Entities", "Stupid People", "Smart People"
   ];
 
-
   const lineups = [
     "Basketball Starting 5 (PG, SG, SF, PF, C)",
     "Soccer Starting XI (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)",
     "Baseball Starting 1-9 + SP (CF, LF, RF, 2B, 3B, SS, 1B, C, DH, SP)",
-    "American Football Offense (QB, RB, WR, TE, OL)",
+    "American Football (QB, RB, RB2, WR, WR2, TE, D/ST, K)",
     "Hockey Starting 6 (LW, C, RW, LD, RD, G)",
     "Esports Team (Top, Jungle, Mid, ADC, Support)",
     "Volleyball Starting 6 (Setter, Outside Hitter, Middle Blocker, Opposite Hitter, Libero, Defensive Specialist)",
@@ -39,7 +38,7 @@
     "Basketball Starting 5 (PG, SG, SF, PF, C)": `Evaluate each drafted basketball lineup. Analyze position fit, offensive/defensive balance, chemistry, and overall basketball IQ. Assign an NBA 2K-style OVR rating to each player and determine which team would dominate on the court.`,
     "Soccer Starting XI (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)": `Review each soccer lineup. Consider player synergy, formation logic, positional strengths, and overall team chemistry. Rate individual players on skill and role-fit, and crown the best football squad.`,
     "Baseball Starting 1-9 + SP (CF, LF, RF, 2B, 3B, SS, 1B, C, DH, SP)": `Evaluate the following baseball lineups by doing player-to-player matchups and positional fits. Judge each team on chemistry, talent, lineup construction sensibility, and more. Assign MLB The Show-style OVRs to each player and declare the strongest roster.`,
-    "American Football Offense (QB, RB, WR, TE, OL)": `Break down each football offensive lineup. Consider the versatility, playmaking, blocking synergy, and quarterback leadership. Rate each player as in Madden, then decide which offense would be most unstoppable on the field.`,
+    "American Football (QB, RB, RB2, WR, WR2, TE, D/ST, K)": `Break down each football lineup. Consider the versatility, playmaking, blocking synergy, and quarterback leadership. Rate each player as in Madden, then decide which offense would be most unstoppable on the field.`,
     "Hockey Starting 6 (LW, C, RW, LD, RD, G)": `Analyze each hockey team. Evaluate skating ability, positional coverage, puck control, chemistry, and goalie reliability. Assign NHL-style ratings and determine which team would rule the rink.`,
     "Esports Team (Top, Jungle, Mid, ADC, Support)": `Judge the composition of each esports team, focusing on meta relevance, role synergy, mechanical skill, and strategic balance. Assign each player an OVR like in League of Legends rankings and determine the superior team.`,
     "Volleyball Starting 6 (Setter, Outside Hitter, Middle Blocker, Opposite Hitter, Libero, Defensive Specialist)": `Assess each volleyball lineup. Evaluate height, agility, communication, and role coverage. Rate each player's skill level and synergy, then decide which team would dominate a match.`
@@ -49,7 +48,7 @@
     "Basketball Starting 5 (PG, SG, SF, PF, C)": 5,
     "Soccer Starting XI (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)": 11,
     "Baseball Starting 1-9 + SP (CF, LF, RF, 2B, 3B, SS, 1B, C, DH, SP)": 10,
-    "American Football Offense (QB, RB, WR, TE, OL)": 5,
+    "American Football (QB, RB, RB2, WR, WR2, TE, D/ST, K)": 8,
     "Hockey Starting 6 (LW, C, RW, LD, RD, G)": 6,
     "Esports Team (Top, Jungle, Mid, ADC, Support)": 5,
     "Volleyball Starting 6 (Setter, Outside Hitter, Middle Blocker, Opposite Hitter, Libero, Defensive Specialist)": 6,
@@ -115,7 +114,11 @@
   function nextPlayerTurn() {
     currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
   }
-
+function getRemainingPositions(player) {
+  const allPositions = parsePositions(lineup).map(p => p.toLowerCase());
+  const usedPositions = player.lineup.map(i => i.position?.toLowerCase()).filter(Boolean);
+  return allPositions.filter(p => !usedPositions.includes(p));
+}
   function renderDraftArea() {
     draftArea.innerHTML = "";
     const isBaseball = lineup.includes("Baseball");
@@ -131,6 +134,13 @@
       const title = document.createElement("h4");
       title.textContent = player.name;
       div.appendChild(title);
+      const remaining = getRemainingPositions(player);
+      if (remaining.length > 0) {
+        const remainingDiv = document.createElement("div");
+        remainingDiv.className = "remainingPositions";
+        remainingDiv.innerHTML = `<strong>Remaining Positions:</strong> ${remaining.join(", ").toUpperCase()}`;
+        div.appendChild(remainingDiv);
+      }
 
       const ul = document.createElement("ul");
       ul.className = "draftList";
