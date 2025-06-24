@@ -71,6 +71,8 @@
   const resultSection = document.getElementById("resultSection");
   const promptOutput = document.getElementById("promptOutput");
   const copyPromptBtn = document.getElementById("copyPromptBtn");
+  const editPromptBtn = document.getElementById("editPromptBtn");
+
   const chatgptLink = document.getElementById("chatgptLink");
 
   let players = [];
@@ -417,4 +419,17 @@ function getRemainingPositions(player) {
     promptOutput.select();
     document.execCommand("copy");
   });
+  editPromptBtn.addEventListener("click", () => {
+  const isReadOnly = promptOutput.hasAttribute("readonly");
+
+  if (isReadOnly) {
+    promptOutput.removeAttribute("readonly");
+    editPromptBtn.textContent = "Lock Prompt";
+    promptOutput.focus();
+  } else {
+    promptOutput.setAttribute("readonly", true);
+    editPromptBtn.textContent = "Edit Prompt";
+  }
+});
+
 })();
