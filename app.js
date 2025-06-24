@@ -61,6 +61,11 @@
   const startDraftBtn = document.getElementById("startDraftBtn");
 
   const setupSection = document.getElementById("setup");
+  const snakeDraftCheckbox = document.getElementById("snakeDraftCheckbox");
+  let snakeDraft = false;
+  let forward = true; // snake direction flag
+
+
   const draftSection = document.getElementById("draftSection");
   const categoryDisplay = document.getElementById("categoryDisplay");
   const lineupDisplay = document.getElementById("lineupDisplay");
@@ -113,9 +118,31 @@
     const clean = [...new Set(positions.filter(p => p && p.length > 0))];
     return clean.length > 0 ? clean : ["Position 1", "Position 2", "Position 3"];
   }
-  function nextPlayerTurn() {
-    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+let pickIndexInRound = 0;
+
+function nextPlayerTurn() {
+  const numPlayers = players.length;
+
+  if (!snakeDraft) {
+    currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
+    return;
   }
+
+  pickIndexInRound++;
+
+  if (pickIndexInRound >= numPlayers) {
+    forward = !forward; // flip direction after a full round
+    pickIndexInRound = 0;
+  }
+
+  if (forward) {
+    currentPlayerIndex = pickIndexInRound;
+  } else {
+    currentPlayerIndex = numPlayers - 1 - pickIndexInRound;
+  }
+}
+
+
 function getRemainingPositions(player) {
   const allPositions = parsePositions(lineup).map(p => p.toLowerCase());
   const usedPositions = player.lineup.map(i => i.position?.toLowerCase()).filter(Boolean);
@@ -356,6 +383,11 @@ function getRemainingPositions(player) {
     maxPicksPerTeam = positions.length;
     totalDraftRounds = maxPicksPerTeam * players.length;
     currentPlayerIndex = 0;
+snakeDraft = snakeDraftCheckbox.checked;
+forward = true;
+pickIndexInRound = 0;
+
+
     totalPicksMade = 0;
     drafting = true;
 
