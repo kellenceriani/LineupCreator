@@ -267,23 +267,6 @@ button:disabled {
   margin-bottom: 1rem;
 }
 
-/* Shared Button Styles */
-/* #copyPromptBtn,
-#chatgptLink.button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  min-width: 180px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-} */
 
 /* Individual Button Colors */
 #copyPromptBtn {
@@ -306,18 +289,38 @@ button:disabled {
   main {
     padding: 1rem;
   }
-  /* #copyPromptBtn,
-  #chatgptLink.button {
-    display: block;
-    width: 100%;
-    margin-bottom: 0.75rem;
-  } */
   #playersContainer {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 
   .playerDraft {
     min-width: 100%;
+  }.alt-draft-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .alt-draft-label {
+    font-size: 1.2rem;
+    margin-right: 0;
+  }
+
+  .alt-draft-buttons {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .alt-draft-buttons a {
+    flex: 1 1 auto;
+  }
+
+  .heist-button,
+  .random-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
   }
 }
 .battingOrder {
@@ -334,4 +337,54 @@ textarea:focus {
   border-color: #007bff;
   outline: none;
   background-color: #f9f9f9;
+}
+.alt-draft-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.alt-draft-label {
+  color: white;
+  font-size: 1.3rem;
+  margin-right: 0.8rem;
+  white-space: nowrap;
+}
+
+.alt-draft-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.heist-button {
+  background-color: #b36464;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.random-button {
+  background-color: #3564b4;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+#startDraftBtn {
+    display: block;
+    margin: 2rem auto 1rem;
+    font-size: 1.3rem;
+    border-radius: 10px;
+}
+#startDraftBtn:hover:not(:disabled) {
+  background: #4834d4;
+  transform: scale(1.07);
 }

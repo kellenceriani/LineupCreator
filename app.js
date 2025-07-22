@@ -257,7 +257,12 @@ function getRemainingPositions(player) {
           e.preventDefault();
           const char = charInput.value.trim();
           if (!char) return;
-
+          // Case-insensitive duplicate check
+          const allDrafted = players.flatMap(p => p.lineup.map(i => i.character.toLowerCase()));
+          if (allDrafted.includes(char.toLowerCase())) {
+            alert(`"${char}" has already been picked by another player.`);
+            return;
+          }
           let pos = posInput.value.trim();
 
           // For Baseball, ensure position and batting order input
@@ -362,6 +367,10 @@ function getRemainingPositions(player) {
   }
 
   startDraftBtn.addEventListener("click", () => {
+  const altButtons = document.querySelector('.alt-draft-container');
+  if (altButtons) {
+    altButtons.style.display = 'none';
+  }
     const playerNameInputs = document.querySelectorAll(".playerNameInput");
     players = Array.from(playerNameInputs).map(input => ({
       name: input.value.trim() || `Player ${+input.dataset.index + 1}`,
