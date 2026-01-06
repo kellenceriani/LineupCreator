@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings - Lineup Wars</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Settings</h1>
+
+    <section class="settings-section">
+
+      <h2>Game Defaults</h2>
+      <div class="row">
+        <label for="defaultPlayers">Default Number of Players:</label>
+        <input type="number" id="defaultPlayers" min="2" max="8" value="2">
+      </div>
+      <div class="row">
+        <label>
+          <input type="checkbox" id="defaultSnakeDraft">
+          Enable Snake Draft by default
+        </label>
+      </div>
+      <div class="row">
+        <label for="defaultLineup">Default Lineup Type:</label>
+        <select id="defaultLineup">
+          <option value="">-- None --</option>
+          <option value="Basketball Starting 5 (PG, SG, SF, PF, C)">Basketball Starting 5</option>
+          <option value="Soccer Starting XI (GK, RB, CB, CB2, LB, CM, CDM, CAM, RW, LW, ST)">Soccer Starting XI</option>
+          <option value="Baseball Starting 1-9 + SP (CF, LF, RF, 2B, 3B, SS, 1B, C, DH, SP)">Baseball Starting 1-9 + SP</option>
+          <option value="American Football (QB, RB, RB2, WR, WR2, TE, D/ST, K)">American Football</option>
+          <option value="Hockey Starting 6 (LW, C, RW, LD, RD, G)">Hockey Starting 6</option>
+          <option value="Esports Team (Top, Jungle, Mid, ADC, Support)">Esports Team</option>
+          <option value="Volleyball Starting 6 (Setter, Outside Hitter, Middle Blocker, Opposite Hitter, Libero, Defensive Specialist)">Volleyball Starting 6</option>
+        </select>
+      </div>
+
+      <h2>Visual Theme</h2>
+
+      <div class="row">
+        <label for="bodyBg">Background Gradient (CSS):</label>
+        <input type="text" id="bodyBg" placeholder="e.g. linear-gradient(135deg, #667eea, #764ba2)">
+      </div>
+      <div class="row">
+        <label for="mainBg">Main Container Background:</label>
+        <input type="color" id="mainBg" value="#000000">
+      </div>
+      <div class="row">
+        <label for="buttonColor">Primary Button Color:</label>
+        <input type="color" id="buttonColor" value="#6c5ce7">
+      </div>
+      <div class="row">
+        <label for="buttonHoverColor">Button Hover Color:</label>
+        <input type="color" id="buttonHoverColor" value="#4834d4">
+      </div>
+      <div class="row">
+        <label for="accentColor">Accent Color (e.g., current player highlight):</label>
+        <input type="color" id="accentColor" value="#00b894">
+      </div>
+      <div class="row">
+        <label for="fontFamily">Font Family:</label>
+        <input type="text" id="fontFamily" placeholder="e.g. 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+      </div>
+
+      <div style="text-align:center; margin-top:1.5rem;">
+        <button onclick="saveSettings()">Save Settings</button>
+        <a href="index.html"><button style="background:#555;">Back</button></a>
+      </div>
+
+    </section>
+  </main>
+
+<script>
+  // Load saved defaults
+  const defaultPlayers = document.getElementById('defaultPlayers');
+  const defaultSnakeDraft = document.getElementById('defaultSnakeDraft');
+  const defaultLineup = document.getElementById('defaultLineup');
+
+  if(localStorage.getItem('defaultPlayers')) defaultPlayers.value = localStorage.getItem('defaultPlayers');
+  if(localStorage.getItem('defaultSnakeDraft') === 'true') defaultSnakeDraft.checked = true;
+  if(localStorage.getItem('defaultLineup')) defaultLineup.value = localStorage.getItem('defaultLineup');
+
+  // Load visual settings
+  const bodyBg = document.getElementById('bodyBg');
+  const mainBg = document.getElementById('mainBg');
+  const buttonColor = document.getElementById('buttonColor');
+  const buttonHoverColor = document.getElementById('buttonHoverColor');
+  const accentColor = document.getElementById('accentColor');
+  const fontFamily = document.getElementById('fontFamily');
+
+  if(localStorage.getItem('bodyBg')) bodyBg.value = localStorage.getItem('bodyBg');
+  if(localStorage.getItem('mainBg')) mainBg.value = localStorage.getItem('mainBg');
+  if(localStorage.getItem('buttonColor')) buttonColor.value = localStorage.getItem('buttonColor');
+  if(localStorage.getItem('buttonHoverColor')) buttonHoverColor.value = localStorage.getItem('buttonHoverColor');
+  if(localStorage.getItem('accentColor')) accentColor.value = localStorage.getItem('accentColor');
+  if(localStorage.getItem('fontFamily')) fontFamily.value = localStorage.getItem('fontFamily');
+
+  function saveSettings() {
+    // Save defaults
+    localStorage.setItem('defaultPlayers', defaultPlayers.value);
+    localStorage.setItem('defaultSnakeDraft', defaultSnakeDraft.checked);
+    localStorage.setItem('defaultLineup', defaultLineup.value);
+
+    // Save visuals
+    localStorage.setItem('bodyBg', bodyBg.value);
+    localStorage.setItem('mainBg', mainBg.value);
+    localStorage.setItem('buttonColor', buttonColor.value);
+    localStorage.setItem('buttonHoverColor', buttonHoverColor.value);
+    localStorage.setItem('accentColor', accentColor.value);
+    localStorage.setItem('fontFamily', fontFamily.value);
+
+    alert('Settings saved!');
+  }
+</script>
+</body>
+</html>

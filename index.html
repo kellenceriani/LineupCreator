@@ -7,7 +7,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main>
+<main data-home="true">
+    <div class="top-right-icons">
+      <a href="settings.html" title="Settings" class="icon-link">⚙️</a>
+      <a href="about.html" title="Rules & Info" class="icon-link">📖</a>
+    </div>
+
     <h1>Lineup Wars!</h1>
     <section id="setup">
       <div class="row">
@@ -21,6 +26,7 @@
           Enable Snake Draft Mode
         </label>
       </div>
+      
       <div class="row">
         <label for="categoryInput">Category (or leave blank for random):</label>
         <input type="text" id="categoryInput" placeholder="e.g. superheroes" />
@@ -55,11 +61,12 @@
   <h2>Generated Prompt</h2>
   <textarea id="promptOutput" readonly></textarea>
 
-  <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-    <button id="editPromptBtn">Edit Prompt</button> <!-- New Button -->
-    <button id="copyPromptBtn">Copy Prompt</button>
-    <button2><a id="chatgptLink" href="https://chat.openai.com/chat" target="_blank" rel="noopener">Go to ChatGPT</a></button>
-  </div>
+<div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+  <button id="editPromptBtn">Edit Prompt</button>
+  <button id="copyPromptBtn">Copy Prompt</button>
+  <a id="chatgptLink" href="https://chat.openai.com/chat" target="_blank" rel="noopener" class="chatgpt-button">Go to ChatGPT</a>
+</div>
+
 </section>
 <br><br>
 <hr>

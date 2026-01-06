@@ -1,4 +1,13 @@
 (() => {
+
+// Hide top-right icons if not on home page
+const topIcons = document.querySelector('.top-right-icons');
+const mainEl = document.querySelector('main');
+if (!mainEl.dataset.home) {
+  topIcons.style.display = 'none';
+}
+
+
   const categories = [
     "Superheroes", "Mario Characters", "TV Characters", "Dog Breeds", "Famous Scientists",
     "Movie Villains", "Mythical Creatures", "Star Wars Characters", "Pokemon", "NBA players (past/present)",
@@ -80,6 +89,57 @@
 
   const chatgptLink = document.getElementById("chatgptLink");
 
+
+  // Load saved defaults
+const savedPlayers = localStorage.getItem('defaultPlayers');
+const savedSnakeDraft = localStorage.getItem('defaultSnakeDraft');
+const savedLineup = localStorage.getItem('defaultLineup');
+
+// Apply defaults if they exist
+if (savedPlayers) {
+  playerCountInput.value = savedPlayers;
+}
+if (savedSnakeDraft === 'true') {
+  snakeDraftCheckbox.checked = true;
+}
+if (savedLineup) {
+  lineupSelect.value = savedLineup;
+}
+
+// Load visual settings
+const savedBodyBg = localStorage.getItem('bodyBg');
+const savedMainBg = localStorage.getItem('mainBg');
+const savedButtonColor = localStorage.getItem('buttonColor');
+const savedButtonHover = localStorage.getItem('buttonHoverColor');
+const savedAccent = localStorage.getItem('accentColor');
+const savedFont = localStorage.getItem('fontFamily');
+
+if (savedBodyBg) document.body.style.background = savedBodyBg;
+if (savedMainBg) document.querySelector('main').style.background = savedMainBg;
+if (savedButtonColor) {
+  const buttons = document.querySelectorAll('button, .chatgpt-button, .heist-button, .random-button');
+  buttons.forEach(btn => btn.style.background = savedButtonColor);
+}
+if (savedButtonHover) {
+  const styleTag = document.createElement('style');
+  styleTag.innerHTML = `
+    button:hover:not(:disabled),
+    .chatgpt-button:hover,
+    .heist-button:hover,
+    .random-button:hover {
+      background: ${savedButtonHover} !important;
+    }
+  `;
+  document.head.appendChild(styleTag);
+}
+if (savedAccent) {
+  // Current player highlight
+  const cssAccent = document.createElement('style');
+  cssAccent.innerHTML = `.current-player { border-color: ${savedAccent}; box-shadow: 0 0 20px ${savedAccent}, 0 6px 12px rgba(0,0,0,0.5) !important; }`;
+  document.head.appendChild(cssAccent);
+}
+if (savedFont) document.body.style.fontFamily = savedFont;
+
   let players = [];
   let category = "";
   let lineup = "";
@@ -89,20 +149,21 @@
   let totalDraftRounds = 0;
   let drafting = false;
 
-  function renderPlayerInputs() {
-    playersContainer.innerHTML = "";
-    let count = +playerCountInput.value;
-    count = Math.max(2, Math.min(count, 8));
+function renderPlayerInputs() {
+  let count = +playerCountInput.value;
+  count = Math.max(2, Math.min(count, 8));
+  playersContainer.innerHTML = "";
 
-    for (let i = 1; i <= count; i++) {
-      const input = document.createElement("input");
-      input.type = "text";
-      input.placeholder = `Player ${i} Name`;
-      input.className = "playerNameInput";
-      input.dataset.index = i - 1;
-      playersContainer.appendChild(input);
-    }
+  for (let i = 1; i <= count; i++) {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = `Player ${i} Name`;
+    input.className = "playerNameInput";
+    input.dataset.index = i - 1;
+    playersContainer.appendChild(input);
   }
+}
+
   playerCountInput.addEventListener("input", renderPlayerInputs);
   renderPlayerInputs();
 
@@ -160,6 +221,10 @@ function getRemainingPositions(player) {
       div.className = "playerDraft";
       div.dataset.playerIndex = idx;
 
+      // Highlight current player
+      if (idx === currentPlayerIndex && drafting) {
+        div.classList.add("current-player");
+      }
       const title = document.createElement("h4");
       title.textContent = player.name;
       div.appendChild(title);
@@ -170,7 +235,11 @@ function getRemainingPositions(player) {
         remainingDiv.innerHTML = `<strong>Remaining Positions:</strong> ${remaining.join(", ").toUpperCase()}`;
         div.appendChild(remainingDiv);
       }
-
+      // Scroll to current player
+      const currentCard = draftArea.querySelector(".current-player");
+      if (currentCard) {
+        currentCard.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       const ul = document.createElement("ul");
       ul.className = "draftList";
       player.lineup.forEach(item => {
@@ -195,6 +264,13 @@ function getRemainingPositions(player) {
       if (idx === currentPlayerIndex && drafting) {
         const form = document.createElement("form");
         form.className = "draftForm";
+
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "draftError";
+        errorDiv.style.color = "#ff6b6b"; // red
+        errorDiv.style.fontSize = "0.9rem";
+        errorDiv.style.marginBottom = "0.4rem";
+        form.appendChild(errorDiv);
 
         // Character input
         const charInput = document.createElement("input");
@@ -260,9 +336,11 @@ function getRemainingPositions(player) {
           // Case-insensitive duplicate check
           const allDrafted = players.flatMap(p => p.lineup.map(i => i.character.toLowerCase()));
           if (allDrafted.includes(char.toLowerCase())) {
-            alert(`"${char}" has already been picked by another player.`);
+            errorDiv.textContent = `"${char}" has already been picked by another player.`;
+            charInput.focus();
             return;
           }
+
           let pos = posInput.value.trim();
 
           // For Baseball, ensure position and batting order input
@@ -272,9 +350,11 @@ function getRemainingPositions(player) {
 
           if (pos) {
             if (!validPositions.includes(pos.toLowerCase())) {
-              alert(`Invalid position. Please enter one of the following:\n${validPositions.join(", ").toUpperCase()}`);
+              errorDiv.textContent = `Invalid position. Use one of: ${validPositions.join(", ").toUpperCase()}`;
+              posInput.focus();
               return;
             }
+
           } else {
             // Randomly assign an available valid position
             const usedPositions = players[idx].lineup.map(i => i.position?.toLowerCase()).filter(Boolean);
@@ -326,6 +406,7 @@ function getRemainingPositions(player) {
           }
 
           players[idx].lineup.push({ character: char, position: pos, battingOrder: battingOrder });
+          errorDiv.textContent = "";
           totalPicksMade++;
 
           if (totalPicksMade >= totalDraftRounds) {
@@ -367,6 +448,9 @@ function getRemainingPositions(player) {
   }
 
   startDraftBtn.addEventListener("click", () => {
+  if (topIcons) topIcons.style.display = "none";
+
+
   const altButtons = document.querySelector('.alt-draft-container');
   if (altButtons) {
     altButtons.style.display = 'none';
@@ -450,16 +534,26 @@ pickIndexInRound = 0;
 });
 
 
-    const evaluationPrompt = lineupPrompts[lineup] || `Analyze the following drafted teams for balance, creativity, and effectiveness. Rate each player and team performance.`;
+    const evaluationPrompt = lineupPrompts[lineup] || `Analyze the following drafted teams for balance, creativity, and effectiveness. Rate each player and team performance. Sim a series where anything can happen.`;
 
     const prompt = `${evaluationPrompt}\n\nCategory: ${category}\nLineup: ${lineup}\n\n${playerSummaries}`;
     promptOutput.value = prompt;
   });
 
-  copyPromptBtn.addEventListener("click", () => {
-    promptOutput.select();
-    document.execCommand("copy");
-  });
+copyPromptBtn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(promptOutput.value);
+    // Optional feedback to user
+    copyPromptBtn.textContent = "Copied!";
+    setTimeout(() => {
+      copyPromptBtn.textContent = "Copy Prompt";
+    }, 1500);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+    alert("Copy failed. Please copy manually.");
+  }
+});
+
   editPromptBtn.addEventListener("click", () => {
   const isReadOnly = promptOutput.hasAttribute("readonly");
 
