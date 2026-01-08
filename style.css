@@ -357,7 +357,8 @@ button:disabled {
   }
 
   .heist-button,
-  .random-button {
+  .random-button,
+  .ub-button {
     width: 100%;
     font-size: 1rem;
     padding: 0.6rem 1rem;
@@ -416,7 +417,14 @@ textarea:focus {
   border-radius: 5px;
   cursor: pointer;
 }
-
+.ub-button {
+  background-color: #2c9556;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 #startDraftBtn {
     display: block;
